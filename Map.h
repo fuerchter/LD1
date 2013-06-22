@@ -17,13 +17,11 @@ using namespace rapidxml;
 class Map
 {
 public:
-	Map(string name);
+	Map(string name, map<string, sf::Texture> &textures);
 	void draw(sf::RenderWindow &window);
-	
 private:
-	sf::Vector2i size;
-	map<string, sf::Texture> textures;
-	vector<sf::Sprite> sprites;
+	sf::Vector2i size_;
+	vector<sf::Sprite> sprites_;
 };
 
 #endif

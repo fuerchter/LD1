@@ -6,11 +6,7 @@ using namespace std;
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
-#include "rapidxml.hpp"
-#include "rapidxml_utils.hpp"
-using namespace rapidxml;
-
-#include "Map.h"
+#include "Level.h"
 
 int main()
 {
@@ -35,9 +31,9 @@ int main()
 		}
 		colors=colors->next_sibling();
 	}*/
-	Map map("layer1");
 	
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "test");
+	Level level(window.getSize());
 	
 	sf::Clock clock;
 	sf::Time previousTick=clock.getElapsedTime();
@@ -45,8 +41,6 @@ int main()
 	
 	sf::Time counter=clock.getElapsedTime();
 	int fps=0;
-	
-	
 	
 	while(window.isOpen())
 	{
@@ -75,13 +69,13 @@ int main()
 		}
 		
 		//UPDATE SECTION
-		
+		level.update(deltaTime.asSeconds());
 		//UPDATE SECTION
 		
 		window.clear();
 		
 		//DRAW SECTION
-		map.draw(window);
+		level.draw(window);
 		//DRAW SECTION
 		
 		window.display();

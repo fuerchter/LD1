@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(string name)
+Map::Map(string name, map<string, sf::Texture> &textures)
 {
 	name+=".xml";
 	file<> xmlFile(name.c_str());
@@ -9,11 +9,12 @@ Map::Map(string name)
 	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
 	
 	xml_node<> *mapSize=doc.first_node()->first_node("size");
-	size.x=atoi(mapSize->first_attribute("x")->value());
-	size.y=atoi(mapSize->first_attribute("y")->value());
+	size_.x=atoi(mapSize->first_attribute("x")->value());
+	size_.y=atoi(mapSize->first_attribute("y")->value());
 	
 	xml_node<> *images=doc.first_node()->first_node("images");
 	xml_node<> *image=images->first_node();
+	
 	while(image)
 	{
 		string textureName=image->first_attribute("texture")->value();
@@ -42,7 +43,7 @@ Map::Map(string name)
 			float ys=atoi(image->first_attribute("ys")->value());
 			sprite.setScale(sprite.getScale().x, ys/sprite.getGlobalBounds().height);
 		}
-		sprites.push_back(sprite);
+		sprites_.push_back(sprite);
 		
 		image=image->next_sibling();
 	}
@@ -50,7 +51,7 @@ Map::Map(string name)
 
 void Map::draw(sf::RenderWindow &window)
 {
-	for(std::vector<sf::Sprite>::iterator it=sprites.begin(); it!=sprites.end(); ++it)
+	for(vector<sf::Sprite>::iterator it=sprites_.begin(); it!=sprites_.end(); ++it)
 	{
 		window.draw(*it);
 	}
