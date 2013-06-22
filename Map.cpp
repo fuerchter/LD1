@@ -1,9 +1,9 @@
 #include "Map.h"
 
-Map::Map(string name, map<string, sf::Texture> &textures)
+Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 {
 	name+=".xml";
-	file<> xmlFile(name.c_str());
+	file<> xmlFile((folder+name).c_str());
 	using namespace rapidxml;
 	xml_document<> doc;    // character type defaults to char
 	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
@@ -15,6 +15,9 @@ Map::Map(string name, map<string, sf::Texture> &textures)
 	xml_node<> *images=doc.first_node()->first_node("images");
 	xml_node<> *image=images->first_node();
 	
+	/**
+	* Moves through each of the images in the xml and pushes them onto the vector
+	*/
 	while(image)
 	{
 		string textureName=image->first_attribute("texture")->value();
@@ -24,7 +27,7 @@ Map::Map(string name, map<string, sf::Texture> &textures)
 		{
 			//Create and insert it
 			sf::Texture texture;
-			texture.loadFromFile(textureName);
+			texture.loadFromFile(folder+textureName);
 			textures.insert(pair<string, sf::Texture>(textureName, texture));
 		}
 		

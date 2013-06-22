@@ -19,6 +19,9 @@ bool Bullet::operator<(const Bullet &bullet) const
 	return time<bullet.time;
 }
 
+/**
+* Adjusts its position with its velocity
+*/
 void Bullet::update(float dt, float y)
 {
 	position_+=velocity_*dt;

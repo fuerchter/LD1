@@ -18,7 +18,7 @@ using namespace rapidxml;
 class Map
 {
 public:
-	Map(string name, map<string, sf::Texture> &textures);
+	Map(string folder, string name, map<string, sf::Texture> &textures);
 	void draw(sf::RenderWindow &window);
 private:
 	sf::Vector2i size_;

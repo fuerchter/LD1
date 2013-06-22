@@ -12,7 +12,6 @@ using namespace std;
 
 #include "Bullet.h"
 
-//Origin: top-left
 class Enemy
 {
 public:

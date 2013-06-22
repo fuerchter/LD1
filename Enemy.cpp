@@ -13,6 +13,11 @@ moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets)
 	sprite_.setOrigin(sprite_.getGlobalBounds().width/2, sprite_.getGlobalBounds().height/2);
 }
 
+/**
+* Follows its waypoints and waits if a waittime was entered\n
+* Currently moves in on a waypoint until the distance is smaller than moveSpeed\n
+* Finally sends out all bullets which have to be shot, putting them in the bullets vector given by the Level
+*/
 void Enemy::update(float dt, float y, vector<Bullet> &bullets)
 {	
 	if(!wayPoints_.empty())
@@ -44,11 +49,8 @@ void Enemy::update(float dt, float y, vector<Bullet> &bullets)
 		}
 	}
 	
-	//cout << position_.x << " " << position_.y << endl;
-	
 	lifeTime_+=dt;
-	//cout << bullets_.size() << endl;
-	if(!bullets_.empty() && lifeTime_>=bullets_[0].time)
+	while(!bullets_.empty() && lifeTime_>=bullets_[0].time)
 	{
 		bullets_[0].setPosition(position_);
 		bullets.push_back(bullets_[0]);

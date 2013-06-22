@@ -7,7 +7,6 @@ using namespace std;
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 
-//Origin: top-left
 class Player
 {
 public:

@@ -9,7 +9,7 @@ all : main.o Level.o Map.o Player.o Enemy.o Bullet.o
 main.o : main.cpp Level.h Level.cpp
 	$(CC) $(CFLAGS) main.cpp -I$(SFML)/include -I$(RAPIDXML)
 	
-Level.o : Level.h Level.cpp Map.h Map.cpp Player.h Player.cpp
+Level.o : Level.h Level.cpp Map.h Map.cpp Player.h Player.cpp Enemy.h Enemy.cpp Bullet.h Bullet.cpp
 	$(CC) $(CFLAGS) Level.cpp -I$(SFML)/include -I$(RAPIDXML)
 	
 Map.o : Map.h Map.cpp
@@ -18,7 +18,7 @@ Map.o : Map.h Map.cpp
 Player.o : Player.h Player.cpp
 	$(CC) $(CFLAGS) Player.cpp -I$(SFML)/include
 	
-Enemy.o : Enemy.h Enemy.cpp
+Enemy.o : Enemy.h Enemy.cpp Bullet.h Bullet.cpp
 	$(CC) $(CFLAGS) Enemy.cpp -I$(SFML)/include
 	
 Bullet.o : Bullet.h Bullet.cpp

@@ -9,31 +9,9 @@ using namespace std;
 #include "Level.h"
 
 int main()
-{
-	/*file<> xmlFile("level.xml");
-	using namespace rapidxml;
-	xml_document<> doc;    // character type defaults to char
-	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
-	
-	xml_node<> *level=doc.first_node();
-	xml_node<> *config=level->first_node("config");
-	xml_node<> *colorscheme=config->first_node("colorscheme");
-	
-	xml_node<> *colors=doc.first_node()->first_node("config")->first_node("colorscheme")->first_node();
-	while(colors)
-	{
-		cout << colors->name() << endl;
-		xml_attribute<> *rgb=colors->first_attribute();
-		while(rgb)
-		{
-			cout << rgb->name() << " " << rgb->value() << endl;
-			rgb=rgb->next_attribute();
-		}
-		colors=colors->next_sibling();
-	}*/
-	
+{	
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "test");
-	Level level(window.getSize());
+	Level level("ground", window.getSize());
 	
 	sf::Clock clock;
 	sf::Time previousTick=clock.getElapsedTime();

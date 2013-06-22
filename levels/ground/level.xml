@@ -15,9 +15,9 @@
 			</waypoints>
 			<bullets>
 				<bullet time="2" xVel="10" yVel="5" xs="32" ys="32" />
-				<bullet time="0" xVel="20" yVel="2" xs="8" ys="8" />
-				<bullet time="1" xVel="5" yVel="30" xs="24" ys="24" />
-				<bullet time="0.5" xVel="5.2" yVel="20.5" xs="16" ys="16" />
+				<bullet time="2" xVel="20" yVel="2" xs="8" ys="8" />
+				<bullet time="2" xVel="5" yVel="30" xs="24" ys="24" />
+				<bullet time="2" xVel="5.2" yVel="20.5" xs="16" ys="16" />
 			</bullets>
 		</enemy>
 	</enemies>

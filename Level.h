@@ -24,7 +24,7 @@ using namespace rapidxml;
 class Level
 {
 public:
-	Level(sf::Vector2u windowSize);
+	Level(string levelName, sf::Vector2u windowSize);
 	void update(float dt);
 	void draw(sf::RenderWindow &window);
 private:
