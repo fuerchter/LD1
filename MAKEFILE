@@ -3,14 +3,20 @@ CFLAGS=-c -Wall
 SFML=C:/Users/fuerchter/Downloads/FULLSFML3
 RAPIDXML=C:/Users/fuerchter/Downloads/rapidxml-1.13/rapidxml-1.13
 
-all : main.o Level.o Map.o
-	$(CC) main.o Level.o Map.o -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+all : main.o Level.o Map.o Player.o Enemy.o
+	$(CC) main.o Level.o Map.o Player.o Enemy.o -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
 	
 main.o : main.cpp Level.h Level.cpp
 	$(CC) $(CFLAGS) main.cpp -I$(SFML)/include -I$(RAPIDXML)
 	
-Level.o : Level.h Level.cpp Map.h Map.cpp
+Level.o : Level.h Level.cpp Map.h Map.cpp Player.h Player.cpp
 	$(CC) $(CFLAGS) Level.cpp -I$(SFML)/include -I$(RAPIDXML)
 	
 Map.o : Map.h Map.cpp
 	$(CC) $(CFLAGS) Map.cpp -I$(SFML)/include -I$(RAPIDXML)
+	
+Player.o : Player.h Player.cpp
+	$(CC) $(CFLAGS) Player.cpp -I$(SFML)/include
+	
+Enemy.o : Enemy.h Enemy.cpp
+	$(CC) $(CFLAGS) Enemy.cpp -I$(SFML)/include

@@ -6,4 +6,22 @@
 		<speed y="20" amount="10" />
 		<speed y="10" amount="50" />
 	</speeds>
+	<enemies>
+		<enemy y="50" texture="tree1.png" moveSpeed="20">
+			<waypoints>
+				<waypoint x="10" y="20" />
+			</waypoints>
+			<bullets>
+				<bullet time="2" xVel="10" yVel="5" />
+			</bullets>
+		</enemy>
+		<enemy y="40" texture="player.png" moveSpeed="20">
+			<waypoints>
+				<waypoint x="200" y="20" />
+			</waypoints>
+			<bullets>
+				<bullet time="2" xVel="10" yVel="5" />
+			</bullets>
+		</enemy>
+	</enemies>
 </level>

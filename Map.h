@@ -14,6 +14,7 @@ using namespace std;
 #include "rapidxml_utils.hpp"
 using namespace rapidxml;
 
+//Origin of each sprite: top-left
 class Map
 {
 public:
