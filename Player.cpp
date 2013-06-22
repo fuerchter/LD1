@@ -9,8 +9,9 @@ Player::Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize)
 	sprite_.setTexture(textures[name]);
 	
 	position_.x=windowSize.x/2;
-	position_.y=windowSize.y-texture.getSize().y-64; //64 is the size of the ground
+	position_.y=windowSize.y-texture.getSize().y/2-64; //64 is the size of the ground
 	sprite_.setPosition(position_);
+	//sprite_.setOrigin(sprite_.getGlobalBounds().width/2, sprite_.getGlobalBounds().height/2);
 }
 
 void Player::update(float dt, float y)

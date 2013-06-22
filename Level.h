@@ -4,6 +4,8 @@
 #include <sstream>
 #include <vector>
 #include <map>
+#include <queue>
+#include <algorithm>
 using namespace std;
 
 #include "SFML/Graphics.hpp"
@@ -17,6 +19,7 @@ using namespace rapidxml;
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 class Level
 {
@@ -33,6 +36,7 @@ private:
 	sf::View view_;
 	Player player_;
 	map<int, Enemy> enemies_;
+	vector<Bullet> bullets_;
 };
 
 #endif

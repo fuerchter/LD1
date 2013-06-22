@@ -7,20 +7,17 @@
 		<speed y="10" amount="50" />
 	</speeds>
 	<enemies>
-		<enemy y="50" texture="tree1.png" moveSpeed="20">
+		<enemy y="10" texture="tree1.png" moveSpeed="50">
 			<waypoints>
-				<waypoint x="10" y="20" />
+				<waypoint x="10" y="20" wait="0" />
+				<waypoint x="200" y="20" wait="3" />
+				<waypoint x="300" y="100" wait="2" />
 			</waypoints>
 			<bullets>
-				<bullet time="2" xVel="10" yVel="5" />
-			</bullets>
-		</enemy>
-		<enemy y="40" texture="player.png" moveSpeed="20">
-			<waypoints>
-				<waypoint x="200" y="20" />
-			</waypoints>
-			<bullets>
-				<bullet time="2" xVel="10" yVel="5" />
+				<bullet time="2" xVel="10" yVel="5" xs="32" ys="32" />
+				<bullet time="0" xVel="20" yVel="2" xs="8" ys="8" />
+				<bullet time="1" xVel="5" yVel="30" xs="24" ys="24" />
+				<bullet time="0.5" xVel="5.2" yVel="20.5" xs="16" ys="16" />
 			</bullets>
 		</enemy>
 	</enemies>
