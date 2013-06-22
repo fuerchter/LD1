@@ -1,12 +1,42 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
+using namespace rapidxml;
+
+#include "Map.h"
+
 int main()
 {
+	/*file<> xmlFile("level.xml");
+	using namespace rapidxml;
+	xml_document<> doc;    // character type defaults to char
+	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
+	
+	xml_node<> *level=doc.first_node();
+	xml_node<> *config=level->first_node("config");
+	xml_node<> *colorscheme=config->first_node("colorscheme");
+	
+	xml_node<> *colors=doc.first_node()->first_node("config")->first_node("colorscheme")->first_node();
+	while(colors)
+	{
+		cout << colors->name() << endl;
+		xml_attribute<> *rgb=colors->first_attribute();
+		while(rgb)
+		{
+			cout << rgb->name() << " " << rgb->value() << endl;
+			rgb=rgb->next_attribute();
+		}
+		colors=colors->next_sibling();
+	}*/
+	Map map("layer1");
+	
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "test");
 	
 	sf::Clock clock;
@@ -14,7 +44,9 @@ int main()
 	sf::Time deltaTime;
 	
 	sf::Time counter=clock.getElapsedTime();
-	int fps=0;	
+	int fps=0;
+	
+	
 	
 	while(window.isOpen())
 	{
@@ -49,7 +81,7 @@ int main()
 		window.clear();
 		
 		//DRAW SECTION
-
+		map.draw(window);
 		//DRAW SECTION
 		
 		window.display();

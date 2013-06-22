@@ -1,9 +1,13 @@
 CC=g++
 CFLAGS=-c -Wall
 SFML=C:/Users/fuerchter/Downloads/FULLSFML3
+RAPIDXML=C:/Users/fuerchter/Downloads/rapidxml-1.13/rapidxml-1.13
 
-all : main.o
-	$(CC) main.o -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+all : main.o Map.o
+	$(CC) main.o Map.o -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
 	
-main.o : main.cpp
-	$(CC) $(CFLAGS) main.cpp -I$(SFML)/include
+main.o : main.cpp Map.h Map.cpp
+	$(CC) $(CFLAGS) main.cpp -I$(SFML)/include -I$(RAPIDXML)
+	
+Map.o : Map.h Map.cpp
+	$(CC) $(CFLAGS) Map.cpp -I$(SFML)/include -I$(RAPIDXML)

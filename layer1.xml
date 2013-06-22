@@ -1,0 +1,6 @@
+<layer1>
+	<size x="100" y="100" />
+	<images>
+		<image texture="ground.png" x="0" y="64" xs="1280" />
+	</images>
+</layer1>
