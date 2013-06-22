@@ -1,0 +1,9 @@
+CC=g++
+CFLAGS=-c -Wall
+SFML=C:/Users/fuerchter/Downloads/FULLSFML3
+
+all : main.o
+	$(CC) main.o -L$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+	
+main.o : main.cpp
+	$(CC) $(CFLAGS) main.cpp -I$(SFML)/include
