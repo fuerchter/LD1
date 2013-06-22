@@ -10,6 +10,7 @@ moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets)
 	position_.x=wayPoints.front().x;
 	position_.y=wayPoints.front().y;
 	sprite_.setPosition(position_);
+	sprite_.setOrigin(sprite_.getGlobalBounds().width/2, sprite_.getGlobalBounds().height/2);
 }
 
 void Enemy::update(float dt, float y, vector<Bullet> &bullets)

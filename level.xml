@@ -9,9 +9,9 @@
 	<enemies>
 		<enemy y="10" texture="tree1.png" moveSpeed="50">
 			<waypoints>
-				<waypoint x="10" y="20" wait="0" />
-				<waypoint x="200" y="20" wait="3" />
-				<waypoint x="300" y="100" wait="2" />
+				<waypoint x="600" y="200" wait="0" />
+				<waypoint x="200" y="200" wait="3" />
+				<waypoint x="300" y="400" wait="2" />
 			</waypoints>
 			<bullets>
 				<bullet time="2" xVel="10" yVel="5" xs="32" ys="32" />
