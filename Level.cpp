@@ -1,7 +1,7 @@
 #include "Level.h"
 
-Level::Level(string levelName, sf::Vector2u windowSize):
-player_(textures_, windowSize) //Create Player
+Level::Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures):
+player_(textures, windowSize), status_(Playing)
 {	
 	file<> xmlFile(("levels/" +levelName+ "/level.xml").c_str());
 	using namespace rapidxml;
@@ -14,7 +14,7 @@ player_(textures_, windowSize) //Create Player
 	{
 		stringstream s;
 		s << i;
-		Map map("levels/" +levelName+ "/", "layer" +s.str(), textures_);
+		Map map("levels/" +levelName+ "/", "layer" +s.str(), textures);
 		maps_.push_back(map);
 	}
 	
@@ -39,7 +39,7 @@ player_(textures_, windowSize) //Create Player
 	//Adds enemies (and thereby waypoints and bullets)
 	sf::Texture bullet;
 	bullet.loadFromFile("bullet.png");
-	textures_.insert(pair<string, sf::Texture>("bullet.png", bullet));
+	textures.insert(pair<string, sf::Texture>("bullet.png", bullet));
 	
 	xml_node<> *enemies=doc.first_node()->first_node("enemies");
 	xml_node<> *enemy=enemies->first_node();
@@ -79,16 +79,28 @@ player_(textures_, windowSize) //Create Player
 			size.x=atoi(bullet->first_attribute("xs")->value());
 			size.y=atoi(bullet->first_attribute("ys")->value());
 			
-			enemyBullets.push_back(Bullet(textures_, velocity, size, time));
+			enemyBullets.push_back(Bullet(textures, velocity, size, time));
 			bullet=bullet->next_sibling();
 		}
 		
 		//Sorting the bullets by time
 		sort(enemyBullets.begin(), enemyBullets.end());
-		enemies_.insert(pair<int, Enemy>(y, Enemy(name, textures_, moveSpeed, wayPoints, enemyBullets)));
+		enemies_.insert(pair<int, Enemy>(y, Enemy(name, textures, moveSpeed, wayPoints, enemyBullets)));
 		enemy=enemy->next_sibling();
 	}
 	
+}
+
+sf::FloatRect Level::getViewBounds()
+{
+	sf::Vector2f center=view_.getCenter();
+	sf::Vector2f size=view_.getSize();
+	return sf::FloatRect(center.x-size.x/2, center.y-size.y/2, size.x, size.y);
+}
+
+Level::Status Level::getStatus()
+{
+	return status_;
 }
 
 /**
@@ -109,12 +121,30 @@ void Level::update(float dt)
 	//Updates the view
 	view_.move(0, -scrollingSpeed_*dt);
 	
-	for(map<int, Enemy>::iterator it=enemies_.begin(); it!=enemies_.end(); ++it)
+	//cout << enemies_.size() << endl;
+	for(map<int, Enemy>::iterator it=enemies_.begin(); it!=enemies_.end();)
 	{
 		//Only enemies which exist on the screen are to be updated
 		if(y_>=it->first)
 		{
 			it->second.update(dt, y_, bullets_);
+			
+			//Enemy hits player
+			if(it->second.getRect().intersects(player_.getRect()))
+			{
+				status_=Lose;
+			}
+			//An enemy has left the screen (and has lived for at least 2 seconds)
+			if(it->second.getLifeTime()>2 && !getViewBounds().intersects(it->second.getRect()))
+			{
+				map<int, Enemy>::iterator toerase = it;
+				++it;
+				enemies_.erase(toerase);
+			}
+			else
+			{
+				++it;
+			}
 		}
 		else
 		{
@@ -125,9 +155,21 @@ void Level::update(float dt)
 	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
 	{
 		it->update(dt, y_);
+		
+		//Bullet hits player
+		if(it->getRect().intersects(player_.getRect()))
+		{
+			status_=Lose;
+		}
+		//A bullet has left the screen
+		if(!getViewBounds().intersects(it->getRect()))
+		{
+			bullets_.erase(it);
+			it--;
+		}
 	}
 	
-	player_.update(dt, y_);	
+	player_.update(dt, y_, view_);	
 }
 
 /**

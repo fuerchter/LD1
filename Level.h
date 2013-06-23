@@ -24,11 +24,19 @@ using namespace rapidxml;
 class Level
 {
 public:
-	Level(string levelName, sf::Vector2u windowSize);
+	enum Status
+	{
+		Playing,
+		Win,
+		Lose
+	};
+	
+	Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures);
+	sf::FloatRect getViewBounds();
+	Level::Status getStatus();
 	void update(float dt);
 	void draw(sf::RenderWindow &window);
 private:
-	map<string, sf::Texture> textures_;
 	vector<Map>	maps_;
 	map<int, float> scrollingSpeeds_; //y coordinate of the top of view_, scrollingSpeed from that point on
 	float scrollingSpeed_;
@@ -37,6 +45,7 @@ private:
 	Player player_;
 	map<int, Enemy> enemies_;
 	vector<Bullet> bullets_;
+	Status status_;
 };
 
 #endif

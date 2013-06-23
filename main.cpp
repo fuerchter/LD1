@@ -11,7 +11,9 @@ using namespace std;
 int main()
 {	
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "test");
-	Level level("ground", window.getSize());
+	
+	map<string, sf::Texture> textures;
+	Level level("ground", window.getSize(), textures);
 	
 	sf::Clock clock;
 	sf::Time previousTick=clock.getElapsedTime();
@@ -48,6 +50,10 @@ int main()
 		
 		//UPDATE SECTION
 		level.update(deltaTime.asSeconds());
+		if(level.getStatus()==Level::Lose)
+		{
+			level=Level("ground", window.getSize(), textures);
+		}
 		//UPDATE SECTION
 		
 		window.clear();

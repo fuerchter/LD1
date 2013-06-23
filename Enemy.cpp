@@ -13,6 +13,16 @@ moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets)
 	sprite_.setOrigin(sprite_.getGlobalBounds().width/2, sprite_.getGlobalBounds().height/2);
 }
 
+sf::FloatRect Enemy::getRect()
+{
+	return sprite_.getGlobalBounds();
+}
+
+float Enemy::getLifeTime()
+{
+	return lifeTime_;
+}
+
 /**
 * Follows its waypoints and waits if a waittime was entered\n
 * Currently moves in on a waypoint until the distance is smaller than moveSpeed\n

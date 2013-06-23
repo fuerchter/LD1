@@ -14,6 +14,7 @@ public:
 	Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time);
 	void setPosition(sf::Vector2f position);
 	bool operator<(const Bullet &bullet) const;
+	sf::FloatRect getRect();
 	void update(float dt, float y);
 	void draw(sf::RenderWindow &window);
 	

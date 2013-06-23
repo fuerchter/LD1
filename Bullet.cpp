@@ -19,6 +19,11 @@ bool Bullet::operator<(const Bullet &bullet) const
 	return time<bullet.time;
 }
 
+sf::FloatRect Bullet::getRect()
+{
+	return sprite_.getGlobalBounds();
+}
+
 /**
 * Adjusts its position with its velocity
 */

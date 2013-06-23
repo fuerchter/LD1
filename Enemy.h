@@ -16,6 +16,8 @@ class Enemy
 {
 public:
 	Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets); //Bullets
+	sf::FloatRect getRect();
+	float getLifeTime();
 	void update(float dt, float y, vector<Bullet> &bullets);
 	void draw(sf::RenderWindow &window);
 	
