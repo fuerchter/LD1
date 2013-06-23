@@ -97,6 +97,7 @@ int main()
 			}
 			stringstream s;
 			s << levelCounter;
+			textures.clear();
 			level=Level(s.str(), window.getSize(), textures, power);
 		}
 		//UPDATE SECTION
