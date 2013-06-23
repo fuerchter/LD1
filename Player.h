@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <sstream>
 using namespace std;
 
 #include "SFML/Graphics.hpp"

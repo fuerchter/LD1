@@ -1,9 +1,18 @@
 <layer1>
 	<images>
-		<image texture="ground.png" x="0" y="64" xs="1280" />
-		<image texture="ground.png" x="0" y="128" xs="1280" />
-		<image texture="ground.png" x="0" y="256" xs="640" />
-		<image texture="tree1.png" x="0" y="800" xs="640" />
-		<image texture="tree1.png" x="256" y="256" />
+		<image texture="cloud1.png" x="0" y="300" />
+		<image texture="cloud1.png" x="50" y="300" />
+		<image texture="cloud2.png" x="0" y="500" />
+		<image texture="greycloud1.png" x="400" y="600" />
+		<image texture="greycloud2.png" x="600" y="300" />
+		<image texture="cloud4.png" x="500" y="800" />
+		<image texture="cloud3.png" x="800" y="300" />
+		<image texture="cloud1.png" x="800" y="1000" />
+		<image texture="cloud1.png" x="1000" y="1200" />
+		<image texture="cloud2.png" x="900" y="800" />
+		<image texture="greycloud1.png" x="800" y="800" />
+		<image texture="greycloud2.png" x="1050" y="1150" />
+		<image texture="cloud4.png" x="800" y="800" />
+		<image texture="cloud3.png" x="800" y="1500" />
 	</images>
 </layer1>

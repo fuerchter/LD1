@@ -70,7 +70,6 @@ int main()
 		level.update(deltaTime.asSeconds(), textures);
 		if(level.getStatus()==Level::Win)
 		{
-			cout << levelCounter << endl;
 			levelCounter++;
 			if(levelCounter>3)
 			{

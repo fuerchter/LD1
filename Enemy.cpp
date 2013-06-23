@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets, float health):
-moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets), health_(health)
+Enemy::Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets, float health, int y):
+moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets), health_(health), y_(y)
 {
 	sf::Texture texture;
 	texture.loadFromFile(name);
@@ -33,6 +33,11 @@ void Enemy::setHealth(float health)
 	health_=health;
 }
 
+int Enemy::getY()
+{
+	return y_;
+}
+
 /**
 * Follows its waypoints and waits if a waittime was entered\n
 * Currently moves in on a waypoint until the distance is smaller than moveSpeed\n
@@ -54,7 +59,7 @@ void Enemy::update(float dt, float y, vector<Bullet> &bullets, sf::Vector2f play
 			direction.y=wayPoints_.front().y-position_.y;
 			float distance=sqrt(pow(direction.x, 2)+pow(direction.y, 2));
 			//Reached the waypoint, required distance is still arbitrary
-			if(distance<moveSpeed_)
+			if(distance<moveSpeed_/5)
 			{
 				wayPoints_.pop();
 			}

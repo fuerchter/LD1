@@ -1,22 +1,59 @@
 <level>
-	<layercount>1</layercount>
-	<playerBulletColor r="255" g="255" b="255" a="255" />
+	<layercount>3</layercount>
+	<playerBulletColor r="122" g="122" b="122" a="255" />
 	<speeds>
-		<speed y="50" amount="70" />
-		<speed y="250" amount="50" />
-		<speed y="20" amount="10" />
 		<speed y="10" amount="50" />
+		<speed y="20" amount="10" />
+		<speed y="50" amount="70" />
+		<speed y="250" amount="50" />		
 	</speeds>
 	<enemies>
-		<enemy y="10" texture="tree1.png" moveSpeed="50" health="100">
+		<enemy y="50" texture="enemy1.png" moveSpeed="100" health="100">
 			<waypoints>
-				<waypoint x="200" y="200" wait="0" />
+				<waypoint x="640" y="-32" wait="0" />
+				<waypoint x="640" y="192" wait="0" />
+				<waypoint x="640" y="-128" wait="26" />
 			</waypoints>
 			<bullets>
-				<bullet time="4" xVel="30" yVel="20" xs="32" ys="32" r="0" g="255" b="0" a="255" />
-				<bullet time="4" xVel="20" yVel="40" xs="8" ys="8" r="0" g="0" b="0" a="255" />
-				<bullet time="4" xVel="10" yVel="30" xs="24" ys="24" r="0" g="0" b="0" a="255" />
-				<bullet time="4" xVel="40" yVel="20" xs="16" ys="16" r="0" g="0" b="0" a="255" />
+				<bullet time="1" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bullet time="2" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bullet time="3" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bulletpattern type="spiral" time="5" timeOffset="0" clockwise="true" startingDegrees="-135" degreesPerBullet="10" totalDegrees="90" speed="100" xs="14" ys="14" r="0" g="0" b="0" a="255" />
+				<bullet time="7" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bullet time="8" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bullet time="9" xVel="50" yVel="50" xs="24" ys="24" homing="" r="0" g="0" b="255" a="255" />
+				<bulletpattern type="spiral" time="11" timeOffset="0" clockwise="true" startingDegrees="-135" degreesPerBullet="10" totalDegrees="90" speed="100" xs="14" ys="14" r="0" g="0" b="0" a="255" />
+				<bullet time="18" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="18.5" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="19" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="20.5" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="21" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="21.5" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="23" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="23.5" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+				<bullet time="24" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
+			</bullets>
+		</enemy>
+		<enemy y="150" texture="enemy1.png" moveSpeed="150" health="100">
+			<waypoints>
+				<waypoint x="-32" y="128" wait="0" />
+				<waypoint x="300" y="256" wait="0" />
+				<waypoint x="300" y="-128" wait="12.5" />
+			</waypoints>
+			<bullets>
+				<bulletpattern type="spiral" time="3" timeOffset="0.1" clockwise="true" startingDegrees="-180" degreesPerBullet="15" totalDegrees="360" speed="120" xs="16" ys="16" r="0" g="0" b="0" a="255" />
+				<bulletpattern type="spiral" time="12" timeOffset="0.1" clockwise="true" startingDegrees="-180" degreesPerBullet="15" totalDegrees="360" speed="120" xs="16" ys="16" r="0" g="0" b="0" a="255" />
+			</bullets>
+		</enemy>
+		<enemy y="150" texture="enemy1.png" moveSpeed="150" health="100">
+			<waypoints>
+				<waypoint x="1312" y="128" wait="0" />
+				<waypoint x="980" y="256" wait="0" />
+				<waypoint x="980" y="-128" wait="12.5" />
+			</waypoints>
+			<bullets>
+				<bulletpattern type="spiral" time="3" timeOffset="0.1" clockwise="false" startingDegrees="-180" degreesPerBullet="15" totalDegrees="360" speed="120" xs="16" ys="16" r="0" g="0" b="0" a="255" />
+				<bulletpattern type="spiral" time="12" timeOffset="0.1" clockwise="false" startingDegrees="-180" degreesPerBullet="15" totalDegrees="360" speed="120" xs="16" ys="16" r="0" g="0" b="0" a="255" />
 			</bullets>
 		</enemy>
 	</enemies>

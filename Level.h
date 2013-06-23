@@ -51,7 +51,7 @@ private:
 	float y_;
 	sf::View view_;
 	Player player_;
-	map<int, Enemy> enemies_;
+	vector<Enemy> enemies_;
 	vector<Bullet> bullets_;
 	vector<Bullet> playerBullets_;
 	Status status_;

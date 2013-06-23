@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize, int power):
-maxMoveSpeed_(200), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(1), currentCooldown_(0), stamina_(100), lossPerShot_(10), regen_(7.5), power_(power)
+maxMoveSpeed_(150), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(0.5), currentCooldown_(0), stamina_(100), lossPerShot_(10), regen_(7.5), power_(power)
 {
 	string name="player.png";
 	sf::Texture texture;
@@ -42,7 +42,7 @@ void Player::setBulletColor(sf::Color color)
 
 void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures, bool lockY, int mapX)
 {
-	cooldown_=1.0/((power_/20.0)+1.0);
+	cooldown_=0.5/((power_/20.0)+1.0);
 	sf::Vector2f velocity;
 	if(!lockY)
 	{
@@ -86,11 +86,11 @@ void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, 
 	if(canShoot_ && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 	{
 		sf::Vector2f shotVelocity;
-		shotVelocity.y=-100-10*power_;
+		shotVelocity.y=-175-10*power_;
 		sf::Vector2i size;
 		size.x=16+4*power_;
 		size.y=16+4*power_;
-		float damage=50+2*power_;
+		float damage=10+2*power_;
 		Bullet bullet(textures, shotVelocity, size, 0, damage, bulletColor_);
 		bullet.setPosition(position_);
 		bullets.push_back(bullet);
@@ -126,5 +126,12 @@ void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, 
 
 void Player::draw(sf::RenderWindow &window)
 {
+	stringstream stamina;
+	stamina << stamina_;
+	stringstream power;
+	power << power_;
+	stringstream cooldown;
+	cooldown << cooldown_;
+	window.setTitle("Stamina: " +stamina.str()+ " Power: " +power.str()+ " Cooldown: " +cooldown.str());
 	window.draw(sprite_);
 }

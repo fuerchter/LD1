@@ -142,7 +142,7 @@ player_(textures, windowSize, power), status_(Playing), lockY_(false)
 		
 		//Sorting the bullets by time
 		sort(enemyBullets.begin(), enemyBullets.end());
-		enemies_.insert(pair<int, Enemy>(y, Enemy(name, textures, moveSpeed, wayPoints, enemyBullets, health)));
+		enemies_.push_back(Enemy(name, textures, moveSpeed, wayPoints, enemyBullets, health, y));
 		enemy=enemy->next_sibling();
 	}
 	
@@ -225,29 +225,24 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 	}
 	
 	//cout << enemies_.size() << endl;
-	for(map<int, Enemy>::iterator it=enemies_.begin(); it!=enemies_.end();)
+	for(vector<Enemy>::iterator it=enemies_.begin(); it!=enemies_.end(); ++it)
 	{
 		//Only enemies which exist on the screen are to be updated
-		if(y_>=it->first)
+		if(y_>=it->getY())
 		{
-			it->second.update(dt, y_, bullets_, player_.getPosition());
+			it->update(dt, y_, bullets_, player_.getPosition());
 			
 			//Enemy hits player
-			if(it->second.getRect().intersects(player_.getRect()))
+			if(it->getRect().intersects(player_.getRect()))
 			{
 				status_=Lose;
 			}
 			//An enemy has left the screen (and has lived for at least 2 seconds)
-			if((it->second.getLifeTime()>2 && !getViewBounds().intersects(it->second.getRect()))
-			|| it->second.getHealth()<=0)
+			if((it->getLifeTime()>2 && !getViewBounds().intersects(it->getRect()))
+			|| it->getHealth()<=0)
 			{
-				map<int, Enemy>::iterator toerase = it;
-				++it;
-				enemies_.erase(toerase);
-			}
-			else
-			{
-				++it;
+				enemies_.erase(it);
+				it--;
 			}
 		}
 		else
@@ -258,35 +253,18 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 	
 	player_.update(dt, y_, view_, playerBullets_, textures, lockY_, maps_[0].getSize().x);
 	
-	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
-	{
-		it->update(dt, y_);
-		
-		//Bullet hits player
-		if(it->getRect().intersects(player_.getRect()))
-		{
-			status_=Lose;
-		}
-		//A bullet has left the screen
-		if(!getViewBounds().intersects(it->getRect()))
-		{
-			bullets_.erase(it);
-			it--;
-		}
-	}
-
 	for(vector<Bullet>::iterator it=playerBullets_.begin(); it!=playerBullets_.end(); ++it)
 	{
 		it->update(dt, y_);
 		bool erase=false;
 		
 		//Bullet hits Enemy
-		for(map<int, Enemy>::iterator et=enemies_.begin(); et!=enemies_.end(); ++et)
+		for(vector<Enemy>::iterator et=enemies_.begin(); et!=enemies_.end(); ++et)
 		{
-			if(it->getRect().intersects(et->second.getRect()))
+			if(y_>=et->getY() && it->getRect().intersects(et->getRect()))
 			{
-				et->second.setHealth((et->second.getHealth())-(it->getDamage()));
-				if(et->second.getHealth()<=0)
+				et->setHealth((et->getHealth())-(it->getDamage()));
+				if(et->getHealth()<=0)
 				{
 					player_.incPower();
 				}
@@ -306,6 +284,23 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 			it--;
 		}
 	}
+	
+	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
+	{
+		it->update(dt, y_);
+		
+		//Bullet hits player
+		if(it->getRect().intersects(player_.getRect()))
+		{
+			status_=Lose;
+		}
+		//A bullet has left the screen
+		if(!getViewBounds().intersects(it->getRect()))
+		{
+			bullets_.erase(it);
+			it--;
+		}
+	}
 }
 
 /**
@@ -320,11 +315,11 @@ void Level::draw(sf::RenderWindow &window)
 		it->draw(window);
 	}
 	
-	for(map<int, Enemy>::iterator it=enemies_.begin(); it!=enemies_.end(); ++it)
+	for(vector<Enemy>::iterator it=enemies_.begin(); it!=enemies_.end(); ++it)
 	{
-		if(y_>=it->first)
+		if(y_>=it->getY())
 		{
-			it->second.draw(window);
+			it->draw(window);
 		}
 		else
 		{
@@ -334,12 +329,12 @@ void Level::draw(sf::RenderWindow &window)
 	
 	player_.draw(window);
 	
-	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
+	for(vector<Bullet>::iterator it=playerBullets_.begin(); it!=playerBullets_.end(); ++it)
 	{
 		it->draw(window);
 	}
 	
-	for(vector<Bullet>::iterator it=playerBullets_.begin(); it!=playerBullets_.end(); ++it)
+	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
 	{
 		it->draw(window);
 	}
