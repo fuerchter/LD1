@@ -8,7 +8,7 @@
 		<speed y="250" amount="50" />		
 	</speeds>
 	<enemies>
-		<enemy y="50" texture="enemy1.png" moveSpeed="100" health="100">
+		<enemy y="50" texture="enemy2.png" moveSpeed="100" health="100">
 			<waypoints>
 				<waypoint x="640" y="-32" wait="0" />
 				<waypoint x="640" y="192" wait="0" />
@@ -34,7 +34,7 @@
 				<bullet time="24" xVel="70" yVel="70" xs="20" ys="20" homing="" r="0" g="0" b="183" a="255" />
 			</bullets>
 		</enemy>
-		<enemy y="150" texture="enemy1.png" moveSpeed="150" health="100">
+		<enemy y="150" texture="enemy2.png" moveSpeed="150" health="100">
 			<waypoints>
 				<waypoint x="-32" y="128" wait="0" />
 				<waypoint x="300" y="256" wait="0" />
@@ -45,7 +45,7 @@
 				<bulletpattern type="spiral" time="12" timeOffset="0.1" clockwise="true" startingDegrees="-180" degreesPerBullet="15" totalDegrees="360" speed="120" xs="16" ys="16" r="0" g="0" b="0" a="255" />
 			</bullets>
 		</enemy>
-		<enemy y="150" texture="enemy1.png" moveSpeed="150" health="100">
+		<enemy y="150" texture="enemy2.png" moveSpeed="150" health="100">
 			<waypoints>
 				<waypoint x="1312" y="128" wait="0" />
 				<waypoint x="980" y="256" wait="0" />
