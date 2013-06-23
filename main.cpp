@@ -49,7 +49,7 @@ int main()
 		}
 		
 		//UPDATE SECTION
-		level.update(deltaTime.asSeconds());
+		level.update(deltaTime.asSeconds(), textures);
 		if(level.getStatus()==Level::Lose)
 		{
 			level=Level("ground", window.getSize(), textures);

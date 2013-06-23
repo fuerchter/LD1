@@ -49,6 +49,7 @@ player_(textures, windowSize), status_(Playing)
 		int y=atoi(enemy->first_attribute("y")->value());
 		string name="levels/" +levelName+ "/" +enemy->first_attribute("texture")->value();
 		float moveSpeed=atof(enemy->first_attribute("moveSpeed")->value());
+		float health=atof(enemy->first_attribute("health")->value());
 		queue<sf::Vector3f> wayPoints;
 		
 		xml_node<> *waypoints=enemy->first_node("waypoints");
@@ -85,7 +86,7 @@ player_(textures, windowSize), status_(Playing)
 		
 		//Sorting the bullets by time
 		sort(enemyBullets.begin(), enemyBullets.end());
-		enemies_.insert(pair<int, Enemy>(y, Enemy(name, textures, moveSpeed, wayPoints, enemyBullets)));
+		enemies_.insert(pair<int, Enemy>(y, Enemy(name, textures, moveSpeed, wayPoints, enemyBullets, health)));
 		enemy=enemy->next_sibling();
 	}
 	
@@ -106,7 +107,7 @@ Level::Status Level::getStatus()
 /**
 * Update sequence: Enemies, Bullets, Player
 */
-void Level::update(float dt)
+void Level::update(float dt, map<string, sf::Texture> &textures)
 {
 	//Calculating the current y coordinate of view
 	y_=-(view_.getCenter().y-view_.getSize().y/2);
@@ -135,7 +136,8 @@ void Level::update(float dt)
 				status_=Lose;
 			}
 			//An enemy has left the screen (and has lived for at least 2 seconds)
-			if(it->second.getLifeTime()>2 && !getViewBounds().intersects(it->second.getRect()))
+			if((it->second.getLifeTime()>2 && !getViewBounds().intersects(it->second.getRect()))
+			|| it->second.getHealth()<=0)
 			{
 				map<int, Enemy>::iterator toerase = it;
 				++it;
@@ -151,6 +153,8 @@ void Level::update(float dt)
 			break;
 		}
 	}
+	
+	player_.update(dt, y_, view_, playerBullets_, textures);
 	
 	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
 	{
@@ -168,8 +172,38 @@ void Level::update(float dt)
 			it--;
 		}
 	}
-	
-	player_.update(dt, y_, view_);	
+
+	for(vector<Bullet>::iterator it=playerBullets_.begin(); it!=playerBullets_.end(); ++it)
+	{
+		it->update(dt, y_);
+		bool erase=false;
+		
+		//Bullet hits Enemy
+		for(map<int, Enemy>::iterator et=enemies_.begin(); et!=enemies_.end(); ++et)
+		{
+			if(it->getRect().intersects(et->second.getRect()))
+			{
+				et->second.setHealth((et->second.getHealth())-(it->getDamage()));
+				if(et->second.getHealth()<=0)
+				{
+					player_.incPower();
+				}
+				erase=true;
+			}
+		}
+
+		//A bullet has left the screen
+		if(!getViewBounds().intersects(it->getRect()))
+		{
+			erase=true;
+		}
+		
+		if(erase)
+		{
+			playerBullets_.erase(it);
+			it--;
+		}
+	}
 }
 
 /**
@@ -199,6 +233,11 @@ void Level::draw(sf::RenderWindow &window)
 	player_.draw(window);
 	
 	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
+	{
+		it->draw(window);
+	}
+	
+	for(vector<Bullet>::iterator it=playerBullets_.begin(); it!=playerBullets_.end(); ++it)
 	{
 		it->draw(window);
 	}

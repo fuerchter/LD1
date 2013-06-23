@@ -34,7 +34,7 @@ public:
 	Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures);
 	sf::FloatRect getViewBounds();
 	Level::Status getStatus();
-	void update(float dt);
+	void update(float dt, map<string, sf::Texture> &textures);
 	void draw(sf::RenderWindow &window);
 private:
 	vector<Map>	maps_;
@@ -45,6 +45,7 @@ private:
 	Player player_;
 	map<int, Enemy> enemies_;
 	vector<Bullet> bullets_;
+	vector<Bullet> playerBullets_;
 	Status status_;
 };
 

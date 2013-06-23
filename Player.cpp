@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize):
-moveSpeed_(150)
+maxMoveSpeed_(200), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(1), currentCooldown_(0), stamina_(100), lossPerShot_(10), regen_(7.5), power_(0)
 {
 	string name="player.png";
 	sf::Texture texture;
@@ -20,8 +20,14 @@ sf::FloatRect Player::getRect()
 	return sprite_.getGlobalBounds();
 }
 
-void Player::update(float dt, float y, sf::View &view)
+void Player::incPower()
 {
+	power_++;
+}
+
+void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures)
+{
+	cooldown_=1.0/((power_/20.0)+1.0);
 	sf::Vector2f velocity;
 	if(position_.y-getRect().height/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -47,6 +53,44 @@ void Player::update(float dt, float y, sf::View &view)
 		velocity*=dt;
 		position_+=velocity;
 	}
+	
+	if(canShoot_ && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+	{
+		sf::Vector2f shotVelocity;
+		shotVelocity.y=-100+10*power_;
+		sf::Vector2i size;
+		size.x=16+4*power_;
+		size.y=16+4*power_;
+		float damage=50+2*power_;
+		Bullet bullet(textures, shotVelocity, size, 0, damage);
+		bullet.setPosition(position_);
+		bullets.push_back(bullet);
+		canShoot_=false;
+		
+		stamina_-=lossPerShot_;
+		if(stamina_<0)
+		{
+			stamina_=0;
+		}
+	}
+	if(!canShoot_)
+	{
+		currentCooldown_+=dt;
+		if(currentCooldown_>=cooldown_)
+		{
+			canShoot_=true;
+			currentCooldown_=0;
+		}
+	}
+	
+	stamina_+=regen_*dt;
+	if(stamina_>100)
+	{
+		stamina_=100;
+	}
+	
+	moveSpeed_=maxMoveSpeed_*(stamina_/100);
+	cout << "Stamina: " << stamina_ << " Power: " << power_ << " Cooldown: " << cooldown_ << endl;
 
 	sprite_.setPosition(position_.x, position_.y-y);
 }

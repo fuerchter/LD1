@@ -15,9 +15,11 @@ using namespace std;
 class Enemy
 {
 public:
-	Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets); //Bullets
+	Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets, float health); //Bullets
 	sf::FloatRect getRect();
 	float getLifeTime();
+	float getHealth();
+	void setHealth(float health);
 	void update(float dt, float y, vector<Bullet> &bullets);
 	void draw(sf::RenderWindow &window);
 	
@@ -28,6 +30,7 @@ private:
 	float lifeTime_;
 	queue<sf::Vector3f> wayPoints_;
 	vector<Bullet> bullets_;
+	float health_;
 };
 
 #endif

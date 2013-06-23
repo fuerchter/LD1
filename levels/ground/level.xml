@@ -7,56 +7,48 @@
 		<speed y="10" amount="50" />
 	</speeds>
 	<enemies>
-		<enemy y="10" texture="tree1.png" moveSpeed="50">
+		<enemy y="10" texture="tree1.png" moveSpeed="50" health="100">
 			<waypoints>
-				<waypoint x="-100" y="200" wait="0" />
 				<waypoint x="200" y="200" wait="0" />
-				<waypoint x="300" y="-400" wait="0" />
 			</waypoints>
 			<bullets>
-				<bullet time="2" xVel="30" yVel="20" xs="32" ys="32" />
-				<bullet time="2" xVel="20" yVel="40" xs="8" ys="8" />
-				<bullet time="2" xVel="10" yVel="30" xs="24" ys="24" />
-				<bullet time="2" xVel="40" yVel="20" xs="16" ys="16" />
+				<bullet time="4" xVel="30" yVel="20" xs="32" ys="32" />
+				<bullet time="4" xVel="20" yVel="40" xs="8" ys="8" />
+				<bullet time="4" xVel="10" yVel="30" xs="24" ys="24" />
+				<bullet time="4" xVel="40" yVel="20" xs="16" ys="16" />
 			</bullets>
 		</enemy>
-		<enemy y="50" texture="tree1.png" moveSpeed="100">
+		<enemy y="50" texture="tree1.png" moveSpeed="100" health="100">
 			<waypoints>
-				<waypoint x="1400" y="200" wait="0" />
-				<waypoint x="100" y="600" wait="0" />
-				<waypoint x="700" y="-400" wait="0" />
+				<waypoint x="100" y="400" wait="0" />
 			</waypoints>
 			<bullets>
-				<bullet time="2" xVel="30" yVel="20" xs="32" ys="32" />
-				<bullet time="2" xVel="20" yVel="40" xs="8" ys="8" />
-				<bullet time="2" xVel="10" yVel="30" xs="24" ys="24" />
-				<bullet time="2" xVel="40" yVel="20" xs="16" ys="16" />
+				<bullet time="4" xVel="30" yVel="20" xs="32" ys="32" />
+				<bullet time="4" xVel="20" yVel="40" xs="8" ys="8" />
+				<bullet time="4" xVel="10" yVel="30" xs="24" ys="24" />
+				<bullet time="4" xVel="40" yVel="20" xs="16" ys="16" />
 			</bullets>
 		</enemy>
-		<enemy y="40" texture="tree1.png" moveSpeed="100">
+		<enemy y="40" texture="tree1.png" moveSpeed="100" health="100">
 			<waypoints>
-				<waypoint x="600" y="-100" wait="0" />
-				<waypoint x="100" y="600" wait="0" />
-				<waypoint x="700" y="-400" wait="0" />
+				<waypoint x="700" y="100" wait="0" />
 			</waypoints>
 			<bullets>
-				<bullet time="2" xVel="30" yVel="20" xs="32" ys="32" />
-				<bullet time="1" xVel="20" yVel="40" xs="8" ys="8" />
-				<bullet time="2" xVel="10" yVel="30" xs="24" ys="24" />
-				<bullet time="2" xVel="40" yVel="20" xs="16" ys="16" />
+				<bullet time="4" xVel="30" yVel="20" xs="32" ys="32" />
+				<bullet time="3" xVel="20" yVel="40" xs="8" ys="8" />
+				<bullet time="4" xVel="10" yVel="30" xs="24" ys="24" />
+				<bullet time="4" xVel="40" yVel="20" xs="16" ys="16" />
 			</bullets>
 		</enemy>
-		<enemy y="20" texture="tree1.png" moveSpeed="100">
+		<enemy y="20" texture="tree1.png" moveSpeed="100" health="100">
 			<waypoints>
-				<waypoint x="300" y="-100" wait="0" />
-				<waypoint x="700" y="600" wait="0" />
-				<waypoint x="800" y="-400" wait="0" />
+				<waypoint x="700" y="400" wait="0" />
 			</waypoints>
 			<bullets>
-				<bullet time="2" xVel="40" yVel="20" xs="32" ys="32" />
-				<bullet time="3" xVel="20" yVel="50" xs="8" ys="8" />
-				<bullet time="2" xVel="20" yVel="30" xs="24" ys="24" />
-				<bullet time="0.5" xVel="10" yVel="20" xs="16" ys="16" />
+				<bullet time="4" xVel="40" yVel="20" xs="32" ys="32" />
+				<bullet time="5" xVel="20" yVel="50" xs="8" ys="8" />
+				<bullet time="4" xVel="20" yVel="30" xs="24" ys="24" />
+				<bullet time="2.5" xVel="10" yVel="20" xs="16" ys="16" />
 			</bullets>
 		</enemy>
 	</enemies>

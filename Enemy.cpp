@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets):
-moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets)
+Enemy::Enemy(string name, map<string, sf::Texture> &textures, float moveSpeed, queue<sf::Vector3f> wayPoints, vector<Bullet> bullets, float health):
+moveSpeed_(moveSpeed), wayPoints_(wayPoints), bullets_(bullets), health_(health)
 {
 	sf::Texture texture;
 	texture.loadFromFile(name);
@@ -21,6 +21,16 @@ sf::FloatRect Enemy::getRect()
 float Enemy::getLifeTime()
 {
 	return lifeTime_;
+}
+
+float Enemy::getHealth()
+{
+	return health_;
+}
+
+void Enemy::setHealth(float health)
+{
+	health_=health;
 }
 
 /**
