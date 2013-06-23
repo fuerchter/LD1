@@ -15,8 +15,9 @@ using namespace std;
 class Player
 {
 public:
-	Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize);
+	Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize, int power);
 	sf::FloatRect getRect();
+	int getPower();
 	void incPower();
 	void update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures);
 	void draw(sf::RenderWindow &window);

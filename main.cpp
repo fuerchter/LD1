@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 #include "SFML/Graphics.hpp"
@@ -13,7 +14,24 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "test");
 	
 	map<string, sf::Texture> textures;
-	Level level("ground", window.getSize(), textures);
+	int levelCounter=0;
+	int power=0;
+	
+	
+	ifstream save ("save.txt");
+	if (save.is_open())
+	{
+		string line;
+		getline(save,line);
+		levelCounter=atoi(line.c_str());
+		getline(save,line);
+		power=atoi(line.c_str());
+		save.close();
+	}
+	stringstream s;
+	s << levelCounter;
+	Level level(s.str(), window.getSize(), textures, power);
+	
 	
 	sf::Clock clock;
 	sf::Time previousTick=clock.getElapsedTime();
@@ -50,9 +68,37 @@ int main()
 		
 		//UPDATE SECTION
 		level.update(deltaTime.asSeconds(), textures);
-		if(level.getStatus()==Level::Lose)
+		if(level.getStatus()==Level::Win)
 		{
-			level=Level("ground", window.getSize(), textures);
+			cout << levelCounter << endl;
+			levelCounter++;
+			if(levelCounter>3)
+			{
+				levelCounter=0;
+			}
+			ofstream save;
+			save.open ("save.txt");
+			stringstream s;
+			s << levelCounter;
+			save << s.str()+ "\n";
+			save << level.getPlayer().getPower();
+			save.close();
+		}
+		if(level.getStatus()!=Level::Playing)
+		{
+			ifstream save ("save.txt");
+			if (save.is_open())
+			{
+				string line;
+				getline(save,line);
+				levelCounter=atoi(line.c_str());
+				getline(save,line);
+				power=atoi(line.c_str());
+				save.close();
+			}
+			stringstream s;
+			s << levelCounter;
+			level=Level(s.str(), window.getSize(), textures, power);
 		}
 		//UPDATE SECTION
 		

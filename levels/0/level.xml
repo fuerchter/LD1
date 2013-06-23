@@ -52,4 +52,5 @@
 			</bullets>
 		</enemy>
 	</enemies>
+	<win>enemies</win>
 </level>

@@ -19,6 +19,7 @@ class Map
 {
 public:
 	Map(string folder, string name, map<string, sf::Texture> &textures);
+	sf::Vector2i getSize();
 	void draw(sf::RenderWindow &window);
 private:
 	sf::Vector2i size_;

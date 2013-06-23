@@ -1,7 +1,7 @@
 #include "Level.h"
 
-Level::Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures):
-player_(textures, windowSize), status_(Playing)
+Level::Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures, int power):
+player_(textures, windowSize, power), status_(Playing)
 {	
 	file<> xmlFile(("levels/" +levelName+ "/level.xml").c_str());
 	using namespace rapidxml;
@@ -90,6 +90,15 @@ player_(textures, windowSize), status_(Playing)
 		enemy=enemy->next_sibling();
 	}
 	
+	string win=doc.first_node()->first_node("win")->value();
+	if(win=="y")
+	{
+		winCondition_=Y;
+	}
+	else if(win=="enemies")
+	{
+		winCondition_=Enemies;
+	}
 }
 
 sf::FloatRect Level::getViewBounds()
@@ -104,6 +113,11 @@ Level::Status Level::getStatus()
 	return status_;
 }
 
+Player Level::getPlayer()
+{
+	return player_;
+}
+
 /**
 * Update sequence: Enemies, Bullets, Player
 */
@@ -111,6 +125,22 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 {
 	//Calculating the current y coordinate of view
 	y_=-(view_.getCenter().y-view_.getSize().y/2);
+	
+	switch(winCondition_)
+	{
+	case Y:
+		if(y_+view_.getSize().y>=maps_[0].getSize().y)
+		{
+			status_=Win;
+		}
+		break;
+	case Enemies:
+		if(enemies_.empty())
+		{
+			status_=Win;
+		}
+		break;
+	}
 	
 	//A new scrollingSpeed has been assigned
 	if(!scrollingSpeeds_.empty() && y_>=scrollingSpeeds_.begin()->first)

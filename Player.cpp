@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize):
-maxMoveSpeed_(200), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(1), currentCooldown_(0), stamina_(100), lossPerShot_(10), regen_(7.5), power_(0)
+Player::Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize, int power):
+maxMoveSpeed_(200), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(1), currentCooldown_(0), stamina_(100), lossPerShot_(10), regen_(7.5), power_(power)
 {
 	string name="player.png";
 	sf::Texture texture;
@@ -18,6 +18,11 @@ maxMoveSpeed_(200), moveSpeed_(maxMoveSpeed_), canShoot_(true), cooldown_(1), cu
 sf::FloatRect Player::getRect()
 {
 	return sprite_.getGlobalBounds();
+}
+
+int Player::getPower()
+{
+	return power_;
 }
 
 void Player::incPower()
@@ -57,7 +62,7 @@ void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, 
 	if(canShoot_ && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 	{
 		sf::Vector2f shotVelocity;
-		shotVelocity.y=-100+10*power_;
+		shotVelocity.y=-100-10*power_;
 		sf::Vector2i size;
 		size.x=16+4*power_;
 		size.y=16+4*power_;

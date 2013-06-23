@@ -8,16 +8,14 @@ Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 	xml_document<> doc;    // character type defaults to char
 	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
 	
-	xml_node<> *mapSize=doc.first_node()->first_node("size");
+	/*xml_node<> *mapSize=doc.first_node()->first_node("size");
 	size_.x=atoi(mapSize->first_attribute("x")->value());
-	size_.y=atoi(mapSize->first_attribute("y")->value());
+	size_.y=atoi(mapSize->first_attribute("y")->value());*/
 	
 	xml_node<> *images=doc.first_node()->first_node("images");
 	xml_node<> *image=images->first_node();
 	
-	/**
-	* Moves through each of the images in the xml and pushes them onto the vector
-	*/
+	//Moves through each of the images in the xml and pushes them onto the vector
 	while(image)
 	{
 		string textureName=image->first_attribute("texture")->value();
@@ -34,11 +32,20 @@ Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 		//Create and insert the sprite
 		sf::Sprite sprite(textures[textureName]);
 		int x=atoi(image->first_attribute("x")->value());
-		int y=-(atoi(image->first_attribute("y")->value()))+720; //Reversing y axis
+		int actualY=atoi(image->first_attribute("y")->value());
+		int y=-(actualY)+720; //Reversing y axis
+		if(actualY>size_.y)
+		{
+			size_.y=actualY;
+		}
 		sprite.setPosition(x, y);
 		if(image->first_attribute("xs"))
 		{
 			float xs=atoi(image->first_attribute("xs")->value());
+			if(x+xs>size_.x)
+			{
+				size_.x=x+xs;
+			}
 			sprite.setScale(xs/sprite.getGlobalBounds().width, sprite.getScale().y);
 		}
 		if(image->first_attribute("ys"))
@@ -50,6 +57,11 @@ Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 		
 		image=image->next_sibling();
 	}
+}
+
+sf::Vector2i Map::getSize()
+{
+	return size_;
 }
 
 void Map::draw(sf::RenderWindow &window)

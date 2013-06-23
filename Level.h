@@ -30,10 +30,16 @@ public:
 		Win,
 		Lose
 	};
+	enum WinCondition
+	{
+		Y,
+		Enemies
+	};
 	
-	Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures);
+	Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures, int power);
 	sf::FloatRect getViewBounds();
 	Level::Status getStatus();
+	Player getPlayer();
 	void update(float dt, map<string, sf::Texture> &textures);
 	void draw(sf::RenderWindow &window);
 private:
@@ -47,6 +53,7 @@ private:
 	vector<Bullet> bullets_;
 	vector<Bullet> playerBullets_;
 	Status status_;
+	WinCondition winCondition_;
 };
 
 #endif
