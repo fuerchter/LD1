@@ -1,7 +1,7 @@
 #include "Level.h"
 
 Level::Level(string levelName, sf::Vector2u windowSize, map<string, sf::Texture> &textures, int power):
-player_(textures, windowSize, power), status_(Playing)
+player_(textures, windowSize, power), status_(Playing), lockY_(false)
 {	
 	file<> xmlFile(("levels/" +levelName+ "/level.xml").c_str());
 	using namespace rapidxml;
@@ -17,6 +17,20 @@ player_(textures, windowSize, power), status_(Playing)
 		Map map("levels/" +levelName+ "/", "layer" +s.str(), textures);
 		maps_.push_back(map);
 	}
+	
+	if(doc.first_node()->first_node("lockY"))
+	{
+		lockY_=true;
+	}
+	
+	xml_node<> *pbc=doc.first_node()->first_node("playerBulletColor");
+	sf::Color playerBulletColor;
+	playerBulletColor.r=atoi(pbc->first_attribute("r")->value());
+	playerBulletColor.g=atoi(pbc->first_attribute("g")->value());
+	playerBulletColor.b=atoi(pbc->first_attribute("b")->value());
+	playerBulletColor.a=atoi(pbc->first_attribute("a")->value());
+	
+	player_.setBulletColor(playerBulletColor);
 	
 	//Add each speed to the map
 	xml_node<> *speeds=doc.first_node()->first_node("speeds");
@@ -80,13 +94,18 @@ player_(textures, windowSize, power), status_(Playing)
 				sf::Vector2i size;
 				size.x=atoi(bullet->first_attribute("xs")->value());
 				size.y=atoi(bullet->first_attribute("ys")->value());
+				sf::Color bulletColor;
+				bulletColor.r=atoi(bullet->first_attribute("r")->value());
+				bulletColor.g=atoi(bullet->first_attribute("g")->value());
+				bulletColor.b=atoi(bullet->first_attribute("b")->value());
+				bulletColor.a=atoi(bullet->first_attribute("a")->value());
 				bool homing=false;
 				if(bullet->first_attribute("homing"))
 				{
 					homing=true;
 				}
 				
-				enemyBullets.push_back(Bullet(textures, velocity, size, time, 0, homing));
+				enemyBullets.push_back(Bullet(textures, velocity, size, time, 0, bulletColor, homing));
 			}
 			else if(strcmp(bullet->name(), "bulletpattern")==0)
 			{
@@ -107,16 +126,19 @@ player_(textures, windowSize, power), status_(Playing)
 					sf::Vector2i size;
 					size.x=atoi(bullet->first_attribute("xs")->value());
 					size.y=atoi(bullet->first_attribute("ys")->value());
+					sf::Color bulletColor;
+					bulletColor.r=atoi(bullet->first_attribute("r")->value());
+					bulletColor.g=atoi(bullet->first_attribute("g")->value());
+					bulletColor.b=atoi(bullet->first_attribute("b")->value());
+					bulletColor.a=atoi(bullet->first_attribute("a")->value());
 					
-					vector<Bullet> bulletpattern=Bulletpattern::createSpiral(textures, time, timeOffset, clockwise, startingDegrees, degreesPerBullet, totalDegrees, speed, size);
+					vector<Bullet> bulletpattern=Bulletpattern::createSpiral(textures, time, timeOffset, clockwise, startingDegrees, degreesPerBullet, totalDegrees, speed, size, bulletColor);
 					enemyBullets.insert(enemyBullets.end(), bulletpattern.begin(), bulletpattern.end());
 				}
 			}
 			
 			bullet=bullet->next_sibling();
 		}
-		
-		cout << enemyBullets.size() << endl;
 		
 		//Sorting the bullets by time
 		sort(enemyBullets.begin(), enemyBullets.end());
@@ -184,7 +206,23 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 	}
 	
 	//Updates the view
-	view_.move(0, -scrollingSpeed_*dt);
+	sf::Vector2f change(0, -scrollingSpeed_*dt);
+	view_.move(change);
+	
+	if(lockY_) /* && getViewBounds().left+getViewBounds().width<maps_[0].getSize().x*/
+	{
+		//If view is not at left or right border
+		if(player_.getRect().left+player_.getRect().width/2>getViewBounds().width/2 && player_.getRect().left+player_.getRect().width/2<maps_[0].getSize().x-getViewBounds().width/2)
+		{
+			change.x=view_.getCenter().x-(player_.getRect().left+player_.getRect().width/2);
+			view_.setCenter(player_.getRect().left+player_.getRect().width/2, view_.getCenter().y);
+		}
+	}
+	
+	for(int i=1; i<maps_.size(); i++)
+	{
+		maps_[i].move(-change, 1.0/((float)i+1));
+	}
 	
 	//cout << enemies_.size() << endl;
 	for(map<int, Enemy>::iterator it=enemies_.begin(); it!=enemies_.end();)
@@ -218,7 +256,7 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 		}
 	}
 	
-	player_.update(dt, y_, view_, playerBullets_, textures);
+	player_.update(dt, y_, view_, playerBullets_, textures, lockY_, maps_[0].getSize().x);
 	
 	for(vector<Bullet>::iterator it=bullets_.begin(); it!=bullets_.end(); ++it)
 	{
@@ -277,7 +315,7 @@ void Level::draw(sf::RenderWindow &window)
 {
 	window.setView(view_);
 	
-	for(vector<Map>::iterator it=maps_.begin(); it!=maps_.end(); ++it)
+	for(vector<Map>::reverse_iterator it=maps_.rbegin(); it!=maps_.rend(); ++it)
 	{
 		it->draw(window);
 	}

@@ -11,7 +11,7 @@ using namespace std;
 class Bullet
 {
 public:
-	Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage, bool homing=false);
+	Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage, sf::Color color, bool homing=false);
 	sf::Vector2f getPosition();
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getVelocity();

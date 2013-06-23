@@ -8,10 +8,6 @@ Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 	xml_document<> doc;    // character type defaults to char
 	doc.parse<0>(xmlFile.data());    // 0 means default parse flags
 	
-	/*xml_node<> *mapSize=doc.first_node()->first_node("size");
-	size_.x=atoi(mapSize->first_attribute("x")->value());
-	size_.y=atoi(mapSize->first_attribute("y")->value());*/
-	
 	xml_node<> *images=doc.first_node()->first_node("images");
 	xml_node<> *image=images->first_node();
 	
@@ -62,6 +58,14 @@ Map::Map(string folder, string name, map<string, sf::Texture> &textures)
 sf::Vector2i Map::getSize()
 {
 	return size_;
+}
+
+void Map::move(sf::Vector2f direction, float factor)
+{
+	for(vector<sf::Sprite>::iterator it=sprites_.begin(); it!=sprites_.end(); ++it)
+	{
+		it->move(direction*factor);
+	}
 }
 
 void Map::draw(sf::RenderWindow &window)

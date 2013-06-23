@@ -1,0 +1,6 @@
+<layer1>
+	<images>
+		<image texture="mountains.png" x="0" y="720" />
+		<image texture="church.png" x="1280" y="294" />
+	</images>
+</layer1>

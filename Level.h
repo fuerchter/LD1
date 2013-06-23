@@ -56,6 +56,7 @@ private:
 	vector<Bullet> playerBullets_;
 	Status status_;
 	WinCondition winCondition_;
+	bool lockY_;
 };
 
 #endif

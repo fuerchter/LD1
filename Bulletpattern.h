@@ -15,7 +15,7 @@ using namespace std;
 class Bulletpattern
 {
 public:
-	static vector<Bullet> createSpiral(map<string, sf::Texture> &textures, float startingTime, float timeOffset, bool clockwise, float startingDegrees, float degreesPerBullet, float totalDegrees, float speed, sf::Vector2i size);
+	static vector<Bullet> createSpiral(map<string, sf::Texture> &textures, float startingTime, float timeOffset, bool clockwise, float startingDegrees, float degreesPerBullet, float totalDegrees, float speed, sf::Vector2i size, sf::Color color);
 };
 
 #endif

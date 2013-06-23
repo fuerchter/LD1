@@ -35,25 +35,44 @@ void Player::incPower()
 	power_++;
 }
 
-void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures)
+void Player::setBulletColor(sf::Color color)
+{
+	bulletColor_=color;
+}
+
+void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures, bool lockY, int mapX)
 {
 	cooldown_=1.0/((power_/20.0)+1.0);
 	sf::Vector2f velocity;
-	if(position_.y-getRect().height/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if(!lockY)
 	{
-		velocity.y-=1;
+		if(position_.y-getRect().height/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			velocity.y-=1;
+		}
+		if(position_.y+getRect().height/2<view.getSize().y && sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			velocity.y+=1;
+		}
+		if(position_.x-getRect().width/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			velocity.x-=1;
+		}
+		if(position_.x+getRect().width/2<view.getSize().x && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			velocity.x+=1;
+		}
 	}
-	if(position_.y+getRect().height/2<view.getSize().y && sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	else
 	{
-		velocity.y+=1;
-	}
-	if(position_.x-getRect().width/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		velocity.x-=1;
-	}
-	if(position_.x+getRect().width/2<view.getSize().x && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		velocity.x+=1;
+		if(position_.x-getRect().width/2>0 && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			velocity.x-=1;
+		}
+		if(position_.x+getRect().width/2<mapX && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			velocity.x+=1;
+		}
 	}
 	float length=sqrt(pow(velocity.x, 2)+pow(velocity.y, 2));
 	if(length!=0)
@@ -72,7 +91,7 @@ void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, 
 		size.x=16+4*power_;
 		size.y=16+4*power_;
 		float damage=50+2*power_;
-		Bullet bullet(textures, shotVelocity, size, 0, damage);
+		Bullet bullet(textures, shotVelocity, size, 0, damage, bulletColor_);
 		bullet.setPosition(position_);
 		bullets.push_back(bullet);
 		canShoot_=false;

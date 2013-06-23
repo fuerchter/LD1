@@ -20,7 +20,8 @@ public:
 	sf::Vector2f getPosition();
 	int getPower();
 	void incPower();
-	void update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures);
+	void setBulletColor(sf::Color color);
+	void update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures, bool lockY, int mapX);
 	void draw(sf::RenderWindow &window);
 private:
 	sf::Sprite sprite_;
@@ -34,6 +35,7 @@ private:
 	float lossPerShot_;
 	float regen_;
 	int power_;
+	sf::Color bulletColor_;
 };
 
 #endif

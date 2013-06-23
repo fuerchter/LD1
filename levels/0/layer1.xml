@@ -1,10 +1,23 @@
 <layer1>
-	<size x="100" y="100" />
 	<images>
-		<image texture="ground.png" x="0" y="64" xs="1280" />
-		<image texture="ground.png" x="0" y="128" xs="1280" />
-		<image texture="ground.png" x="0" y="256" xs="640" />
-		<image texture="tree1.png" x="0" y="800" xs="640" />
-		<image texture="tree1.png" x="256" y="256" />
+		<image texture="ground.png" x="0" y="64" xs="2560" />
+		<image texture="tree1.png" x="300" y="192" />
+		<image texture="tree2.png" x="200" y="256" />
+		<image texture="cloud1.png" x="400" y="400" />
+		<image texture="cloud2.png" x="550" y="450" />
+		<image texture="cloud3.png" x="650" y="550" />
+		<image texture="cloud4.png" x="800" y="500" />
+		<image texture="house.png" x="700" y="301" />
+		<image texture="greyground.png" x="1580" y="64" />
+		<image texture="greycloud1.png" x="1200" y="500" />
+		<image texture="greycloud2.png" x="1400" y="450" />
+		<image texture="greycloud3.png" x="1550" y="480" />
+		<image texture="greycloud4.png" x="1600" y="500" />
+		<image texture="stake.png" x="1880" y="217" />
+		<image texture="deadbody.png" x="1900" y="128" />
+		<image texture="tree1.png" x="2500" y="192" />
+		<image texture="tree2.png" x="2350" y="256" />
+		<image texture="tree1.png" x="2250" y="192" />
+		<image texture="ctrl.png" x="1890" y="30" />
 	</images>
 </layer1>

@@ -1,11 +1,11 @@
 #include "Bullet.h"
 
-Bullet::Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage, bool homing):
+Bullet::Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage, sf::Color color, bool homing):
 time(time), velocity_(velocity), damage_(damage), homing_(homing)
 {
 	sprite_.setTexture(textures["bullet.png"]);
 	sprite_.setScale(size.x, size.y);
-	sprite_.setColor(sf::Color(255, 0, 0, 255));
+	sprite_.setColor(color);
 	sprite_.setOrigin(0.5, 0.5); //Having to ignore scale the center of the 1x1 image is 0.5x0.5
 }
 
