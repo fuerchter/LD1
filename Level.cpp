@@ -67,22 +67,56 @@ player_(textures, windowSize, power), status_(Playing)
 		vector<Bullet> enemyBullets;
 		
 		xml_node<> *bullets=enemy->first_node("bullets");
-		xml_node<> *bullet=bullets->first_node("bullet");
+		xml_node<> *bullet=bullets->first_node();
 		
 		while(bullet)
 		{
+			if(strcmp(bullet->name(), "bullet")==0)
+			{
+				float time=atof(bullet->first_attribute("time")->value());
+				sf::Vector2f velocity;
+				velocity.x=atof(bullet->first_attribute("xVel")->value());
+				velocity.y=atof(bullet->first_attribute("yVel")->value());
+				sf::Vector2i size;
+				size.x=atoi(bullet->first_attribute("xs")->value());
+				size.y=atoi(bullet->first_attribute("ys")->value());
+				bool homing=false;
+				if(bullet->first_attribute("homing"))
+				{
+					homing=true;
+				}
+				
+				enemyBullets.push_back(Bullet(textures, velocity, size, time, 0, homing));
+			}
+			else if(strcmp(bullet->name(), "bulletpattern")==0)
+			{
+				if(strcmp(bullet->first_attribute("type")->value(), "spiral")==0)
+				{
+					float time=atof(bullet->first_attribute("time")->value());
+					float timeOffset=atof(bullet->first_attribute("timeOffset")->value());
+					string cwise=bullet->first_attribute("clockwise")->value();
+					bool clockwise=true;
+					if(cwise=="false")
+					{
+						clockwise=false;
+					}
+					float startingDegrees=atof(bullet->first_attribute("startingDegrees")->value());
+					float degreesPerBullet=atof(bullet->first_attribute("degreesPerBullet")->value());
+					float totalDegrees=atof(bullet->first_attribute("totalDegrees")->value());
+					float speed=atof(bullet->first_attribute("speed")->value());
+					sf::Vector2i size;
+					size.x=atoi(bullet->first_attribute("xs")->value());
+					size.y=atoi(bullet->first_attribute("ys")->value());
+					
+					vector<Bullet> bulletpattern=Bulletpattern::createSpiral(textures, time, timeOffset, clockwise, startingDegrees, degreesPerBullet, totalDegrees, speed, size);
+					enemyBullets.insert(enemyBullets.end(), bulletpattern.begin(), bulletpattern.end());
+				}
+			}
 			
-			float time=atof(bullet->first_attribute("time")->value());
-			sf::Vector2f velocity;
-			velocity.x=atof(bullet->first_attribute("xVel")->value());
-			velocity.y=atof(bullet->first_attribute("yVel")->value());
-			sf::Vector2i size;
-			size.x=atoi(bullet->first_attribute("xs")->value());
-			size.y=atoi(bullet->first_attribute("ys")->value());
-			
-			enemyBullets.push_back(Bullet(textures, velocity, size, time));
 			bullet=bullet->next_sibling();
 		}
+		
+		cout << enemyBullets.size() << endl;
 		
 		//Sorting the bullets by time
 		sort(enemyBullets.begin(), enemyBullets.end());
@@ -158,7 +192,7 @@ void Level::update(float dt, map<string, sf::Texture> &textures)
 		//Only enemies which exist on the screen are to be updated
 		if(y_>=it->first)
 		{
-			it->second.update(dt, y_, bullets_);
+			it->second.update(dt, y_, bullets_, player_.getPosition());
 			
 			//Enemy hits player
 			if(it->second.getRect().intersects(player_.getRect()))

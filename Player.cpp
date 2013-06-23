@@ -20,6 +20,11 @@ sf::FloatRect Player::getRect()
 	return sprite_.getGlobalBounds();
 }
 
+sf::Vector2f Player::getPosition()
+{
+	return position_;
+}
+
 int Player::getPower()
 {
 	return power_;
@@ -95,7 +100,7 @@ void Player::update(float dt, float y, sf::View &view, vector<Bullet> &bullets, 
 	}
 	
 	moveSpeed_=maxMoveSpeed_*(stamina_/100);
-	cout << "Stamina: " << stamina_ << " Power: " << power_ << " Cooldown: " << cooldown_ << endl;
+	//cout << "Stamina: " << stamina_ << " Power: " << power_ << " Cooldown: " << cooldown_ << endl;
 
 	sprite_.setPosition(position_.x, position_.y-y);
 }

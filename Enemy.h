@@ -20,7 +20,7 @@ public:
 	float getLifeTime();
 	float getHealth();
 	void setHealth(float health);
-	void update(float dt, float y, vector<Bullet> &bullets);
+	void update(float dt, float y, vector<Bullet> &bullets, sf::Vector2f playerPosition);
 	void draw(sf::RenderWindow &window);
 	
 private:

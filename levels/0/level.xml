@@ -10,12 +10,14 @@
 		<enemy y="10" texture="tree1.png" moveSpeed="50" health="100">
 			<waypoints>
 				<waypoint x="200" y="200" wait="0" />
+				<waypoint x="400" y="100" wait="0" />
+				<waypoint x="600" y="300" wait="0" />
 			</waypoints>
 			<bullets>
-				<bullet time="4" xVel="30" yVel="20" xs="32" ys="32" />
-				<bullet time="4" xVel="20" yVel="40" xs="8" ys="8" />
-				<bullet time="4" xVel="10" yVel="30" xs="24" ys="24" />
-				<bullet time="4" xVel="40" yVel="20" xs="16" ys="16" />
+				<bullet time="1" xVel="50" yVel="50" xs="32" ys="32" homing="" />
+				<bullet time="1.5" xVel="50" yVel="50" xs="8" ys="8" homing="" />
+				<bullet time="2" xVel="50" yVel="50" xs="24" ys="24" homing="" />
+				<bullet time="2.5" xVel="50" yVel="50" xs="16" ys="16" homing="" />
 			</bullets>
 		</enemy>
 		<enemy y="50" texture="tree1.png" moveSpeed="100" health="100">

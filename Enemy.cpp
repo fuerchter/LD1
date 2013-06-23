@@ -38,7 +38,7 @@ void Enemy::setHealth(float health)
 * Currently moves in on a waypoint until the distance is smaller than moveSpeed\n
 * Finally sends out all bullets which have to be shot, putting them in the bullets vector given by the Level
 */
-void Enemy::update(float dt, float y, vector<Bullet> &bullets)
+void Enemy::update(float dt, float y, vector<Bullet> &bullets, sf::Vector2f playerPosition)
 {	
 	if(!wayPoints_.empty())
 	{
@@ -73,6 +73,16 @@ void Enemy::update(float dt, float y, vector<Bullet> &bullets)
 	while(!bullets_.empty() && lifeTime_>=bullets_[0].time)
 	{
 		bullets_[0].setPosition(position_);
+		if(bullets_[0].isHoming())
+		{
+			sf::Vector2f velocity=bullets_[0].getVelocity();
+			float speed=sqrt(pow(velocity.x, 2)+pow(velocity.y, 2));
+			velocity=playerPosition-position_;
+			float length=sqrt(pow(velocity.x, 2)+pow(velocity.y, 2));
+			velocity/=length;
+			velocity*=speed;
+			bullets_[0].setVelocity(velocity);
+		}
 		bullets.push_back(bullets_[0]);
 		bullets_.erase(bullets_.begin());
 	}

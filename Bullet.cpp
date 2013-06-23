@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
-Bullet::Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage):
-time(time), velocity_(velocity), damage_(damage)
+Bullet::Bullet(map<string, sf::Texture> &textures, sf::Vector2f velocity, sf::Vector2i size, float time, float damage, bool homing):
+time(time), velocity_(velocity), damage_(damage), homing_(homing)
 {
 	sprite_.setTexture(textures["bullet.png"]);
 	sprite_.setScale(size.x, size.y);
@@ -19,6 +19,16 @@ void Bullet::setPosition(sf::Vector2f position)
 	position_=position;
 }
 
+sf::Vector2f Bullet::getVelocity()
+{
+	return velocity_;
+}
+
+void Bullet::setVelocity(sf::Vector2f velocity)
+{
+	velocity_=velocity;
+}
+
 bool Bullet::operator<(const Bullet &bullet) const
 {
 	return time<bullet.time;
@@ -32,6 +42,11 @@ sf::FloatRect Bullet::getRect()
 float Bullet::getDamage()
 {
 	return damage_;
+}
+
+bool Bullet::isHoming()
+{
+	return homing_;
 }
 
 /**

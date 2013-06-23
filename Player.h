@@ -17,6 +17,7 @@ class Player
 public:
 	Player(map<string, sf::Texture> &textures, sf::Vector2u windowSize, int power);
 	sf::FloatRect getRect();
+	sf::Vector2f getPosition();
 	int getPower();
 	void incPower();
 	void update(float dt, float y, sf::View &view, vector<Bullet> &bullets, map<string, sf::Texture> &textures);

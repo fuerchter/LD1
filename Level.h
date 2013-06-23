@@ -6,6 +6,7 @@
 #include <map>
 #include <queue>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 
 #include "SFML/Graphics.hpp"
@@ -20,6 +21,7 @@ using namespace rapidxml;
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Bulletpattern.h"
 
 class Level
 {
